@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="211.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ib.LoginFXController">
+  <children>
+    <StackPane>
+      <children>
+        <VBox prefHeight="164.0" prefWidth="371.0" spacing="10.0">
+          <children>
+            <GridPane>
+              <children>
+                <Label text="Użytkownik:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label text="Hasło:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="userEditText" prefWidth="143.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <PasswordField fx:id="passwordEditText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="75.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0" prefWidth="136.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <StackPane prefHeight="-1.0" prefWidth="-1.0">
+              <children>
+                <Button fx:id="connectButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#connectButtonOnClick" text="POŁĄCZ" StackPane.alignment="CENTER_RIGHT" />
+              </children>
+            </StackPane>
+                  <TextArea fx:id="logTextView" prefHeight="84.0" prefWidth="339.0" />
+          </children>
+        </VBox>
+      </children>
+    </StackPane>
+  </children>
+  <padding>
+    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+  </padding>
+</StackPane>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.TextArea?>
+<GridPane alignment="center" hgap="10.0" prefHeight="913.0" prefWidth="1298.0" vgap="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ib.CentrumFXController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+          <Label alignment="CENTER" prefHeight="47.0" prefWidth="1278.0" style="-fx-font: NORMAL 20 Tahoma;" text="UŻYTKOWNIK: CENTRUM" />
+
+          <TableView fx:id="centrum_tabela_banki" prefHeight="94.0" prefWidth="1278.0" GridPane.rowIndex="2">
+        <columns>
+            <TableColumn fx:id="centrum_tabela_banki_bank_id" text="bank_id">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_id" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_banki_bank_nazwa" prefWidth="200.0" text="bank_nazwa">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_nazwa" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_banki_bank_miasto" prefWidth="120.0" text="bank_miasto">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_miasto" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_banki_bank_kod_pocztowy" prefWidth="132.0" text="bank_kod_pocztowy">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_kod_pocztowy" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_banki_bank_ulica" prefWidth="361.0" text="bank_ulica">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_ulica" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_banki_bank_email" prefWidth="169.0" text="bank_email">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_email" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_banki_bank_tel" prefWidth="215.0" text="bank_tel">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_tel" />
+                </cellValueFactory>
+            </TableColumn>
+
+              </columns>
+
+          </TableView>
+    <HBox alignment="bottom_right" prefHeight="0.0" prefWidth="1278.0" spacing="10" GridPane.rowIndex="4">
+        <children>
+            <TextField fx:id="dodaj_dawce_dawca_id" prefHeight="25.0" prefWidth="130.0" promptText="dawca_id" />
+            <TextField fx:id="dodaj_dawce_dawca_waga" prefHeight="25.0" prefWidth="130.0" promptText="dawca_waga" />
+            <TextField fx:id="dodaj_dawce_dawca_data_urodzenia" prefHeight="25.0" prefWidth="169.0" promptText="dawca_data_urodzenia" />
+            <TextField fx:id="dodaj_dawce_imie_nazwisko" prefHeight="25.0" prefWidth="130.0" promptText="dawca_imie_nazwisko" />
+            <Button fx:id="addDonorButton" onAction="#addDonorButtonOnClick" prefHeight="25.0" prefWidth="211.0" text="DODAJ DAWCĘ" />
+        </children>
+    </HBox>
+
+          <HBox alignment="bottom_right" prefHeight="25.0" prefWidth="1201.0" spacing="10" GridPane.rowIndex="5">
+        <TextField fx:id="dodaj_jednostke_jednostka_krwi_id" prefHeight="25.0" prefWidth="130.0" promptText="jednostka_krwi_id" />
+        <TextField fx:id="dodaj_jednostke_dawca_id" prefWidth="130.0" promptText="dawca_id" />
+        <TextField fx:id="dodaj_jednostke_jednostka_krwi_Rh" prefWidth="130.0" promptText="jednostka_krwi_Rh" />
+        <TextField fx:id="dodaj_jednostke_jednostka_krwi_grupa" prefHeight="25.0" prefWidth="130.0" promptText="jednostka_krwi_grupa" />
+        <TextField fx:id="dodaj_jednostke_jednostka_krwi_data_oddania" prefHeight="25.0" prefWidth="169.0" promptText="jednostka_krwi_data_oddania" />
+        <TextField fx:id="dodaj_jednostke_bank_id" prefHeight="25.0" prefWidth="130.0" promptText="bank_id" />
+        <Button fx:id="addBloodUnitButton" onAction="#addBloodUnitButtonOnClick" prefHeight="25.0" prefWidth="211.0" text="DODAJ JEDNOSTKĘ KRWI" />
+    </HBox>
+    <TableView fx:id="centrum_tabela_jednostki_krwi" prefHeight="196.0" prefWidth="1278.0" GridPane.rowIndex="3">
+        <columns>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_dawca_id" text="dawca_id">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Dawca_id" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_dawca_waga" prefWidth="85.0" text="dawca_waga">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Dawca_waga" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_dawca_data_urodzenia" prefWidth="138.0" text="dawca_data_urodzenia">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Dawca_data_urodzenia" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_dawca_imie_nazwisko" prefWidth="131.0" text="dawca_imie_nazwisko">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Dawca_imie_nazwisko" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_jednostka_krwi_id" prefWidth="116.0" text="jednostka_krwi_id">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Jednostka_krwi_id" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_jednostka_krwi_grupa" prefWidth="146.0" text="jednostka_krwi_grupa">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Jednostka_krwi_grupa" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_jednostka_krwi_Rh" prefWidth="130.0" text="jednostka_krwi_Rh">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Jednostka_krwi_Rh" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_jednostka_krwi_data_oddania" prefWidth="173.0" text="jednostka_krwi_data_oddania">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Jednostka_krwi_data_oddania" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_jednostka_krwi_status_var" prefWidth="203.0" text="jednostka_krwi_status_var">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Jednostka_krwi_status_var" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_jednostki_krwi_bank_id" prefWidth="75.0" text="bank_id">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_id" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+
+          </TableView>
+    <TableView fx:id="centrum_tabela_zapasy" prefHeight="183.0" prefWidth="1278.0" GridPane.rowIndex="7">
+        <columns>
+            <TableColumn fx:id="centrum_tabela_zapasy_grupa" prefWidth="188.0" text="grupa">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Grupa" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_zapasy_Rh" prefWidth="295.0" text="Rh">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Rh" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_zapasy_ilosc" prefWidth="284.0" text="ilosc">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Ilosc" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_zapasy_potrzeba" prefWidth="268.0" text="potrzeba">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Potrzeba" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="centrum_tabela_zapasy_bank_id" prefWidth="242.0" text="bank_id">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Bank_id" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+
+          </TableView>
+    <HBox alignment="bottom_right" layoutX="20.0" layoutY="539.0" prefHeight="17.0" prefWidth="1278.0" spacing="10" GridPane.rowIndex="6">
+        <children>
+            <TextField fx:id="bank_id" prefHeight="25.0" prefWidth="130.0" promptText="bank_id" />
+            <TextField fx:id="bank_nazwa" prefHeight="25.0" prefWidth="130.0" promptText="bank_nazwa" />
+            <TextField fx:id="bank_miasto" prefHeight="25.0" prefWidth="130.0" promptText="bank_miasto" />
+            <TextField fx:id="bank_kod_pocztowy" prefHeight="25.0" prefWidth="130.0" promptText="bank_kod_pocztowy" />
+            <TextField fx:id="bank_ulica" prefHeight="25.0" prefWidth="130.0" promptText="bank_ulica" />
+            <TextField fx:id="bank_email" prefHeight="25.0" prefWidth="169.0" promptText="bank_email" />
+            <TextField fx:id="bank_tel" prefHeight="25.0" prefWidth="130.0" promptText="bank_tel" />
+            <Button fx:id="addBankButton" onAction="#addBankButtonOnClick" prefHeight="25.0" prefWidth="211.0" text="DODAJ BANK" />
+        </children>
+    </HBox>
+   <HBox GridPane.rowIndex="1">
+      <children>
+         <TextArea fx:id="consoleTextArea" editable="false" wrapText="true" maxWidth="665.0" prefHeight="90.0" prefWidth="665.0" />
+         <VBox>
+            <children>
+                <Button fx:id="disconnectButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#disconnectButtonOnClick" prefHeight="45.0" prefWidth="665.0" text="ROZŁĄCZ" />
+               <Button fx:id="pokazDaneButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#pokazDaneButtonOnClick" prefHeight="45.0" prefWidth="665.0" text="POKAŻ DANE" />
+            </children>
+         </VBox>
+      </children>
+   </HBox>
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="47.0" minHeight="16.0" prefHeight="30.0" />
+        <RowConstraints />
+        <RowConstraints maxHeight="275.0" minHeight="112.0" prefHeight="189.0" />
+        <RowConstraints maxHeight="198.0" minHeight="10.0" prefHeight="178.0" />
+        <RowConstraints maxHeight="41.0" minHeight="0.0" prefHeight="24.0" />
+        <RowConstraints maxHeight="56.0" minHeight="0.0" prefHeight="27.0" />
+      <RowConstraints maxHeight="178.0" minHeight="10.0" prefHeight="25.0" />
+      <RowConstraints />
+    </rowConstraints>
+
+      </GridPane>
