@@ -12,6 +12,14 @@ public class ZapasyWybraneDAO {
     private String login;
     private DBUtil dbUtil;
     private TextArea consoleTextArea;
+    private String grupa_input;
+    private String Rh_input;
+    private BankFXController bankFXController;
+
+    public ZapasyWybraneDAO(String grupa_input, String rh_input) {
+        this.grupa_input = grupa_input;
+        this.Rh_input = rh_input;
+    }
 
     public ZapasyWybraneDAO(String login, DBUtil dbUtil, TextArea consoleTextArea) {
         this.login = login;
@@ -24,9 +32,12 @@ public class ZapasyWybraneDAO {
         this.dbUtil = dbUtil;
     }
 
+
     public ObservableList<Zapasy> showAllZapasyWybrane() throws SQLException, ClassNotFoundException {
 
-        String selectStmt = "SELECT * FROM sprawdzenie_zapasow_widok;";
+        ZapasyWybraneDAO zapasyWybraneDAO = bankFXController.zapasyWybraneDAO;
+
+        String selectStmt = "call sprawdzenie_zapasow_wybrane('"+ zapasyWybraneDAO.grupa_input +"', '"+ zapasyWybraneDAO.Rh_input +"');";
         ResultSet resultSet = dbUtil.dbExecuteQuery(selectStmt);
         ObservableList<Zapasy> zapasyWybraneObservableList = getZapasyWybraneList(resultSet);
         return zapasyWybraneObservableList;

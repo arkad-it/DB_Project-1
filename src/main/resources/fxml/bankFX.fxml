@@ -34,19 +34,6 @@
         </children>
     </HBox>
 
-    <HBox alignment="bottom_right" prefHeight="25.0" prefWidth="1201.0" spacing="10" GridPane.rowIndex="5">
-        <TextField fx:id="dodaj_jednostke_krwi_jednostka_krwi_id" prefHeight="25.0" prefWidth="130.0"
-                   promptText="jednostka_krwi_id"/>
-        <TextField fx:id="dodaj_jednostke_krwi_dawca_id" prefWidth="130.0" promptText="dawca_id"/>
-        <TextField fx:id="dodaj_jednostke_krwi_jednostka_krwi_Rh" prefWidth="130.0" promptText="jednostka_krwi_Rh"/>
-        <TextField fx:id="dodaj_jednostke_krwi_jednostka_krwi_grupa" prefHeight="25.0" prefWidth="130.0"
-                   promptText="jednostka_krwi_grupa"/>
-        <TextField fx:id="dodaj_jednostke_krwi_jednostka_krwi_data_oddania" prefHeight="25.0" prefWidth="169.0"
-                   promptText="jednostka_krwi_data_oddania"/>
-        <TextField fx:id="dodaj_jednostke_krwi_bank_id" prefHeight="25.0" prefWidth="130.0" promptText="bank_id"/>
-        <Button fx:id="addBloodUnitButton" onAction="#addBloodUnitButtonOnClick" prefHeight="25.0" prefWidth="211.0"
-                text="DODAJ JEDNOSTKĘ KRWI"/>
-    </HBox>
     <TableView fx:id="bank_tabela_jednostki" prefHeight="160.0" prefWidth="1278.0" GridPane.rowIndex="3">
         <columns>
             <TableColumn fx:id="bank_dawca_id" text="dawca_id">

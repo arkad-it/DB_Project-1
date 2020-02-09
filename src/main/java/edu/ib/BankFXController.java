@@ -19,8 +19,17 @@ public class BankFXController {
     public String login;
     public String password;
     public DBUtil dbUtil;
+
     public JednostkiKrwiDAO jednostkiKrwiDAO;
     public ZapasyDAO zapasyDAO;
+
+    public String grupa_input;
+    public String Rh_input;
+    public ZapasyWybraneDAO zapasyWybraneDAO = new ZapasyWybraneDAO(grupa_input, Rh_input);
+
+    public ZapasyWybraneDAO getZapasyWybraneDAO() {
+        return zapasyWybraneDAO;
+    }
 
     @FXML
     private ResourceBundle resources;
@@ -36,27 +45,6 @@ public class BankFXController {
 
     @FXML
     private Button showReservesButton;
-
-    @FXML
-    private TextField dodaj_jednostke_krwi_jednostka_krwi_id;
-
-    @FXML
-    private TextField dodaj_jednostke_krwi_dawca_id;
-
-    @FXML
-    private TextField dodaj_jednostke_krwi_jednostka_krwi_Rh;
-
-    @FXML
-    private TextField dodaj_jednostke_krwi_jednostka_krwi_grupa;
-
-    @FXML
-    private TextField dodaj_jednostke_krwi_jednostka_krwi_data_oddania;
-
-    @FXML
-    private TextField dodaj_jednostke_krwi_bank_id;
-
-    @FXML
-    private Button addBloodUnitButton;
 
     @FXML
     private TableView<JednostkiKrwi> bank_tabela_jednostki;
@@ -143,11 +131,6 @@ public class BankFXController {
     private Button bank_pokazDaneButton;
 
     @FXML
-    void addBloodUnitButtonOnClick(ActionEvent event) {
-
-    }
-
-    @FXML
     void bank_pokazDaneButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         loadData();
@@ -165,7 +148,25 @@ public class BankFXController {
     }
 
     @FXML
-    void showReservesButtonOnClick(ActionEvent event) {
+    void showReservesButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
+
+        this.grupa_input = wyswietl_zapasy_jednostka_krwi_grupa.getText();
+        this.Rh_input = wyswietl_zapasy_jednostka_krwi_Rh.getText();
+
+        dbUtil.dbExecuteUpdate("call sprawdzenie_zapasow();");
+        dbUtil.dbExecuteUpdate("call sprawdzenie_daty();");
+
+
+
+        ObservableList<Zapasy> zapasyWybraneObservableList = null;
+        try {
+            zapasyWybraneObservableList = zapasyWybraneDAO.showAllZapasyWybrane();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        populateWybraneZapasy(zapasyWybraneObservableList);
 
     }
 
@@ -229,19 +230,15 @@ public class BankFXController {
     private void populateJednostki(ObservableList<JednostkiKrwi> jednostkiKrwiWybraneObservableList) {
         bank_tabela_jednostki.setItems(jednostkiKrwiWybraneObservableList);
     }
+    private void populateWybraneZapasy(ObservableList<Zapasy> zapasyWybraneObservableList) {
+        bank_tabela_zapasy_wybrane.setItems(zapasyWybraneObservableList);
+    }
 
     @FXML
     void initialize() {
         assert wyswietl_zapasy_jednostka_krwi_grupa != null : "fx:id=\"wyswietl_zapasy_jednostka_krwi_grupa\" was not injected: check your FXML file 'bankFX.fxml'.";
         assert wyswietl_zapasy_jednostka_krwi_Rh != null : "fx:id=\"wyswietl_zapasy_jednostka_krwi_Rh\" was not injected: check your FXML file 'bankFX.fxml'.";
         assert showReservesButton != null : "fx:id=\"showReservesButton\" was not injected: check your FXML file 'bankFX.fxml'.";
-        assert dodaj_jednostke_krwi_jednostka_krwi_id != null : "fx:id=\"dodaj_jednostke_krwi_jednostka_krwi_id\" was not injected: check your FXML file 'bankFX.fxml'.";
-        assert dodaj_jednostke_krwi_dawca_id != null : "fx:id=\"dodaj_jednostke_krwi_dawca_id\" was not injected: check your FXML file 'bankFX.fxml'.";
-        assert dodaj_jednostke_krwi_jednostka_krwi_Rh != null : "fx:id=\"dodaj_jednostke_krwi_jednostka_krwi_Rh\" was not injected: check your FXML file 'bankFX.fxml'.";
-        assert dodaj_jednostke_krwi_jednostka_krwi_grupa != null : "fx:id=\"dodaj_jednostke_krwi_jednostka_krwi_grupa\" was not injected: check your FXML file 'bankFX.fxml'.";
-        assert dodaj_jednostke_krwi_jednostka_krwi_data_oddania != null : "fx:id=\"dodaj_jednostke_krwi_jednostka_krwi_data_oddania\" was not injected: check your FXML file 'bankFX.fxml'.";
-        assert dodaj_jednostke_krwi_bank_id != null : "fx:id=\"dodaj_jednostke_krwi_bank_id\" was not injected: check your FXML file 'bankFX.fxml'.";
-        assert addBloodUnitButton != null : "fx:id=\"addBloodUnitButton\" was not injected: check your FXML file 'bankFX.fxml'.";
         assert bank_tabela_jednostki != null : "fx:id=\"bank_tabela_jednostki\" was not injected: check your FXML file 'bankFX.fxml'.";
         assert bank_dawca_id != null : "fx:id=\"bank_dawca_id\" was not injected: check your FXML file 'bankFX.fxml'.";
         assert bank_dawca_waga != null : "fx:id=\"bank_dawca_waga\" was not injected: check your FXML file 'bankFX.fxml'.";

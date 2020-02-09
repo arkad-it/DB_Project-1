@@ -168,11 +168,13 @@ BEGIN
 
 drop table if exists sprawdzenie_zapasow_wybrane_tabela;
 create table sprawdzenie_zapasow_wybrane_tabela as 
-select grupa, Rh, ilosc, potrzeba from sprawdzenie_zapasow_tabela where (grupa_input=grupa and rh_input=Rh);
+select grupa, Rh, ilosc, potrzeba, id_banku from sprawdzenie_zapasow_tabela where (grupa_input=grupa and rh_input=Rh);
 
 drop view if exists sprawdzenie_zapasow_wybrane_widok;
 create view sprawdzenie_zapasow_wybrane_widok as 
 select * from sprawdzenie_zapasow_wybrane_tabela;
+
+select * from sprawdzenie_zapasow_wybrane_widok;
 
 END $$
 DELIMITER ;
@@ -266,9 +268,9 @@ GRANT ALL ON bank_krwi TO 'Bank_1'@'localhost';
 GRANT EXECUTE ON PROCEDURE sprawdzenie_daty TO 'Bank_1'@'localhost'; 
 GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasow TO 'Bank_1'@'localhost'; 
 GRANT EXECUTE ON PROCEDURE transfuzja TO 'Bank_1'@'localhost'; 
-GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasów_wybrane TO 'Bank_1'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasow_wybrane TO 'Bank_1'@'localhost'; 
 GRANT EXECUTE ON PROCEDURE bank_jednostki TO 'Bank_1'@'localhost'; 
-GRANT EXECUTE ON FUNCTION get_bank_id TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON FUNCTION get_bank_id TO 'Bank_1'@'localhost'; 
 GRANT SELECT ON bank_krwi.* TO 'Bank_1'@'localhost'; 
 GRANT UPDATE ON bank_krwi.* TO 'Bank_1'@'localhost'; 
 GRANT CREATE ON bank_krwi.* TO 'Bank_1'@'localhost'; 
@@ -283,7 +285,7 @@ GRANT ALL ON bank_krwi TO 'Bank_2'@'localhost';
 GRANT EXECUTE ON PROCEDURE sprawdzenie_daty TO 'Bank_2'@'localhost'; 
 GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasow TO 'Bank_2'@'localhost'; 
 GRANT EXECUTE ON PROCEDURE transfuzja TO 'Bank_2'@'localhost'; 
-GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasów_wybrane TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasow_wybrane TO 'Bank_2'@'localhost'; 
 GRANT EXECUTE ON PROCEDURE bank_jednostki TO 'Bank_2'@'localhost'; 
 GRANT EXECUTE ON FUNCTION get_bank_id TO 'Bank_2'@'localhost'; 
 GRANT SELECT ON bank_krwi.* TO 'Bank_2'@'localhost'; 

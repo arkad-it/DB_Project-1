@@ -28,6 +28,7 @@ public class LoginFXController {
     private BankiDAO bankiDAO;
     private JednostkiKrwiDAO jednostkiKrwiDAO;
     private ZapasyDAO zapasyDAO;
+    private ZapasyWybraneDAO zapasyWybraneDAO;
 
     public BankiDAO getBankiDAO() {
         return bankiDAO;
@@ -40,6 +41,8 @@ public class LoginFXController {
     public ZapasyDAO getZapasyDAO(){
         return zapasyDAO;
     }
+
+    public ZapasyWybraneDAO getZapasyWybraneDAO() {return zapasyWybraneDAO;}
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -71,6 +74,7 @@ public class LoginFXController {
         bankiDAO = new BankiDAO(login,dbUtil);
         jednostkiKrwiDAO= new JednostkiKrwiDAO(login, dbUtil);
         zapasyDAO= new ZapasyDAO(login, dbUtil);
+        zapasyWybraneDAO = new ZapasyWybraneDAO(login, dbUtil);
 
         String fxml = null;
 
@@ -109,6 +113,7 @@ public class LoginFXController {
             bankFXController.login = this.login;
             bankFXController.jednostkiKrwiDAO = this.jednostkiKrwiDAO;
             bankFXController.zapasyDAO = this.zapasyDAO;
+            bankFXController.zapasyWybraneDAO = this.zapasyWybraneDAO;
             stage.show();
         }
 
