@@ -156,7 +156,7 @@ public class BankFXController {
         dbUtil.dbExecuteUpdate("call sprawdzenie_zapasow();");
         dbUtil.dbExecuteUpdate("call sprawdzenie_daty();");
 
-
+        //
 
         ObservableList<Zapasy> zapasyWybraneObservableList = null;
         try {
