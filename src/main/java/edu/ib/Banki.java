@@ -4,7 +4,6 @@ import com.mysql.cj.conf.IntegerProperty;
 import com.mysql.cj.conf.StringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 
 public class Banki {

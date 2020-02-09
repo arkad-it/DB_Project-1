@@ -76,7 +76,7 @@
             </TableColumn>
             <TableColumn fx:id="bank_jednostka_krwi_grupa" prefWidth="146.0" text="jednostka_krwi_grupa">
                 <cellValueFactory>
-                    <PropertyValueFactory property="Jendostka_krwi_grupa"/>
+                    <PropertyValueFactory property="Jednostka_krwi_grupa"/>
                 </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id="bank_jednostka_krwi_Rh" prefWidth="130.0" text="jednostka_krwi_Rh">
@@ -103,58 +103,58 @@
     </TableView>
     <HBox GridPane.rowIndex="7">
         <children>
-            <TableView fx:id="bank_tabela_zapasy" prefHeight="155.0" prefWidth="1280.0">
+            <TableView fx:id="bank_tabela_zapasy" prefHeight="155.0" prefWidth="640.0">
                 <columns>
-                    <TableColumn fx:id="bank_tabela_zapasy_grupa" prefWidth="120.0" text="grupa">
+                    <TableColumn fx:id="bank_tabela_zapasy_grupa" prefWidth="128.0" text="grupa">
                         <cellValueFactory>
                             <PropertyValueFactory property="Grupa"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_Rh" minWidth="0.0" prefWidth="120.0" text="Rh">
+                    <TableColumn fx:id="bank_tabela_zapasy_Rh" minWidth="0.0" prefWidth="128.0" text="Rh">
                         <cellValueFactory>
                             <PropertyValueFactory property="Rh"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_ilosc" prefWidth="120.0" text="ilosc">
+                    <TableColumn fx:id="bank_tabela_zapasy_ilosc" prefWidth="128.0" text="ilosc">
                         <cellValueFactory>
                             <PropertyValueFactory property="Ilosc"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_potrzeba" prefWidth="277.0" text="potrzeba">
+                    <TableColumn fx:id="bank_tabela_zapasy_potrzeba" prefWidth="128.0" text="potrzeba">
                         <cellValueFactory>
                             <PropertyValueFactory property="Potrzeba"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_bank_id" minWidth="0.0" prefWidth="638.0" text="bank_id">
+                    <TableColumn fx:id="bank_tabela_zapasy_bank_id" minWidth="0.0" prefWidth="128.0" text="bank_id">
                         <cellValueFactory>
                             <PropertyValueFactory property="Bank_id"/>
                         </cellValueFactory>
                     </TableColumn>
                 </columns>
             </TableView>
-            <TableView fx:id="bank_tabela_zapasy_wybrane" prefHeight="72.0" prefWidth="1278.0">
+            <TableView fx:id="bank_tabela_zapasy_wybrane" prefHeight="72.0" prefWidth="640.0">
                 <columns>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_grupa" prefWidth="120.0" text="grupa">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_grupa" prefWidth="128.0" text="grupa">
                         <cellValueFactory>
                             <PropertyValueFactory property="Grupa"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_Rh" prefWidth="120.0" text="Rh">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_Rh" prefWidth="128.0" text="Rh">
                         <cellValueFactory>
                             <PropertyValueFactory property="Rh"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_ilosc" prefWidth="120.0" text="ilosc">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_ilosc" prefWidth="128.0" text="ilosc">
                         <cellValueFactory>
                             <PropertyValueFactory property="Ilosc"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_potrzeba" prefWidth="275.0" text="potrzeba">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_potrzeba" prefWidth="128.0" text="potrzeba">
                         <cellValueFactory>
                             <PropertyValueFactory property="Potrzeba"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_bank_id" minWidth="0.0" prefWidth="225.0"
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_bank_id" minWidth="0.0" prefWidth="128.0"
                                  text="bank_id">
                         <cellValueFactory>
                             <PropertyValueFactory property="Bank_id"/>

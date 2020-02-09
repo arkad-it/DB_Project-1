@@ -1,7 +1,10 @@
 package edu.ib;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,8 +12,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class BankFXController {
+
+    public String login;
+    public String password;
+    public DBUtil dbUtil;
+    public JednostkiKrwiDAO jednostkiKrwiDAO;
+    public ZapasyDAO zapasyDAO;
 
     @FXML
     private ResourceBundle resources;
@@ -49,73 +59,73 @@ public class BankFXController {
     private Button addBloodUnitButton;
 
     @FXML
-    private TableView<?> bank_tabela_jednostki;
+    private TableView<JednostkiKrwi> bank_tabela_jednostki;
 
     @FXML
-    private TableColumn<?, ?> bank_dawca_id;
+    private TableColumn<JednostkiKrwi, Integer> bank_dawca_id;
 
     @FXML
-    private TableColumn<?, ?> bank_dawca_waga;
+    private TableColumn<JednostkiKrwi, Integer> bank_dawca_waga;
 
     @FXML
-    private TableColumn<?, ?> bank_dawca_data_urodzenia;
+    private TableColumn<JednostkiKrwi, String> bank_dawca_data_urodzenia;
 
     @FXML
-    private TableColumn<?, ?> bank_dawca_imie_nazwisko;
+    private TableColumn<JednostkiKrwi, String> bank_dawca_imie_nazwisko;
 
     @FXML
-    private TableColumn<?, ?> bank_jednostka_krwi_id;
+    private TableColumn<JednostkiKrwi, Integer> bank_jednostka_krwi_id;
 
     @FXML
-    private TableColumn<?, ?> bank_jednostka_krwi_grupa;
+    private TableColumn<JednostkiKrwi, String> bank_jednostka_krwi_grupa;
 
     @FXML
-    private TableColumn<?, ?> bank_jednostka_krwi_Rh;
+    private TableColumn<JednostkiKrwi, String> bank_jednostka_krwi_Rh;
 
     @FXML
-    private TableColumn<?, ?> bank_jednostka_krwi_data_oddania;
+    private TableColumn<JednostkiKrwi, String> bank_jednostka_krwi_data_oddania;
 
     @FXML
-    private TableColumn<?, ?> bank_jednostka_krwi_status_var;
+    private TableColumn<JednostkiKrwi, String> bank_jednostka_krwi_status_var;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_jednostka_krwi_bank_id;
+    private TableColumn<JednostkiKrwi, Integer> bank_tabela_jednostka_krwi_bank_id;
 
     @FXML
-    private TableView<?> bank_tabela_zapasy;
+    private TableView<Zapasy> bank_tabela_zapasy;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_grupa;
+    private TableColumn<Zapasy, String> bank_tabela_zapasy_grupa;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_Rh;
+    private TableColumn<Zapasy, String> bank_tabela_zapasy_Rh;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_ilosc;
+    private TableColumn<Zapasy, Integer> bank_tabela_zapasy_ilosc;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_potrzeba;
+    private TableColumn<Zapasy, String> bank_tabela_zapasy_potrzeba;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_bank_id;
+    private TableColumn<Zapasy, Integer> bank_tabela_zapasy_bank_id;
 
     @FXML
-    private TableView<?> bank_tabela_zapasy_wybrane;
+    private TableView<Zapasy> bank_tabela_zapasy_wybrane;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_wybrane_grupa;
+    private TableColumn<Zapasy, String> bank_tabela_zapasy_wybrane_grupa;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_wybrane_Rh;
+    private TableColumn<Zapasy, String> bank_tabela_zapasy_wybrane_Rh;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_wybrane_ilosc;
+    private TableColumn<Zapasy, Integer> bank_tabela_zapasy_wybrane_ilosc;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_wybrane_potrzeba;
+    private TableColumn<Zapasy, String> bank_tabela_zapasy_wybrane_potrzeba;
 
     @FXML
-    private TableColumn<?, ?> bank_tabela_zapasy_wybrane_bank_id;
+    private TableColumn<Zapasy, Integer> bank_tabela_zapasy_wybrane_bank_id;
 
     @FXML
     private TextField do_transfuzji_jednostka_krwi_id;
@@ -138,12 +148,19 @@ public class BankFXController {
     }
 
     @FXML
-    void bank_pokazDaneButtonOnClick(ActionEvent event) {
+    void bank_pokazDaneButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
+
+        loadData();
 
     }
 
     @FXML
-    void disconnectButtonOnClick(ActionEvent event) {
+    void disconnectButtonOnClick(ActionEvent event) throws SQLException {
+
+        dbUtil.dbDisconnect();
+
+        Stage stage = (Stage) disconnectButton.getScene().getWindow();
+        stage.close();
 
     }
 
@@ -153,8 +170,64 @@ public class BankFXController {
     }
 
     @FXML
-    void transfusionButtonOnClick(ActionEvent event) {
+    void transfusionButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
+        if (!do_transfuzji_jednostka_krwi_id.getText().isEmpty()) {
+
+            String selectStmt = "call transfuzja(" + do_transfuzji_jednostka_krwi_id.getText() + ");";
+
+
+            try {
+                dbUtil.dbExecuteUpdate(selectStmt);
+            } catch (SQLException e) {
+                consoleTextArea.appendText("Error occurred while transfuzja(); Operation."  + "\n");
+                throw e;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            consoleTextArea.appendText("Transfusion succeeded!" + "\n");
+        }
+        else {consoleTextArea.appendText("Transfusion failed! - all textfields must be filled with data." + "\n");}
+
+
+        loadData();
+
+    }
+
+    private void loadData() throws SQLException, ClassNotFoundException {
+
+        dbUtil.dbExecuteUpdate("call sprawdzenie_zapasow();");
+        dbUtil.dbExecuteUpdate("call sprawdzenie_daty();");
+
+        ObservableList<JednostkiKrwi> jednostkiKrwiWybraneObservableList = null;
+        try {
+            jednostkiKrwiWybraneObservableList = jednostkiKrwiDAO.showWybraneJednostki();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        populateJednostki(jednostkiKrwiWybraneObservableList);
+
+
+
+        ObservableList<Zapasy> zapasyObservableList = null;
+        try {
+            zapasyObservableList = zapasyDAO.showAllZapasy();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        populateZapasy(zapasyObservableList);
+
+    }
+
+    private void populateZapasy(ObservableList<Zapasy> zapasyObservableList) {
+        bank_tabela_zapasy.setItems(zapasyObservableList);
+    }
+    private void populateJednostki(ObservableList<JednostkiKrwi> jednostkiKrwiWybraneObservableList) {
+        bank_tabela_jednostki.setItems(jednostkiKrwiWybraneObservableList);
     }
 
     @FXML

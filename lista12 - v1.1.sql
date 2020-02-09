@@ -210,6 +210,8 @@ drop view if exists bank_jednostki_widok;
 create view bank_jednostki_widok as 
 select * from bank_jednostki_tabela;
 
+select * from bank_jednostki_widok;
+
 END $$
 DELIMITER ;
 
@@ -258,15 +260,60 @@ call bank_jednostki(10);
 
 #------------------------------------------------------------UŻYTKOWNICY
 
+DROP USER IF EXISTS 'Bank_1'@'localhost';
 CREATE USER 'Bank_1'@'localhost' IDENTIFIED BY 'Bank_1'; 
-GRANT select ON TO 'Bank_1'@'localhost'; 
+GRANT ALL ON bank_krwi TO 'Bank_1'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_daty TO 'Bank_1'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasow TO 'Bank_1'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE transfuzja TO 'Bank_1'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasów_wybrane TO 'Bank_1'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE bank_jednostki TO 'Bank_1'@'localhost'; 
+GRANT EXECUTE ON FUNCTION get_bank_id TO 'Bank_2'@'localhost'; 
+GRANT SELECT ON bank_krwi.* TO 'Bank_1'@'localhost'; 
+GRANT UPDATE ON bank_krwi.* TO 'Bank_1'@'localhost'; 
+GRANT CREATE ON bank_krwi.* TO 'Bank_1'@'localhost'; 
+GRANT DELETE ON bank_krwi.* TO 'Bank_1'@'localhost'; 
 FLUSH PRIVILEGES;
 
+
+
+DROP USER IF EXISTS 'Bank_2'@'localhost';
 CREATE USER 'Bank_2'@'localhost' IDENTIFIED BY 'Bank_2'; 
-GRANT select ON TO 'Bank_2'@'localhost'; 
+GRANT ALL ON bank_krwi TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_daty TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasow TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE transfuzja TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE sprawdzenie_zapasów_wybrane TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON PROCEDURE bank_jednostki TO 'Bank_2'@'localhost'; 
+GRANT EXECUTE ON FUNCTION get_bank_id TO 'Bank_2'@'localhost'; 
+GRANT SELECT ON bank_krwi.* TO 'Bank_2'@'localhost'; 
+GRANT UPDATE ON bank_krwi.* TO 'Bank_2'@'localhost'; 
+GRANT CREATE ON bank_krwi.* TO 'Bank_2'@'localhost'; 
+GRANT DELETE ON bank_krwi.* TO 'Bank_2'@'localhost'; 
 FLUSH PRIVILEGES;
 
+#------------------------------------------------------------ GET BANK ID
 
+drop procedure if exists get_bank_id;
+drop function if exists get_bank_id;
+DELIMITER $$
+CREATE function get_bank_id
+(bank_nazwa_input varchar(50))
+RETURNS int DETERMINISTIC
+BEGIN
+
+SET @where_id = (select bank_id from bank where (bank_nazwa="Bank_1"));
+
+return @where_id;
+
+END $$
+DELIMITER ;
+
+call get_bank_id("Bank_1");
+SET @where_id = (select bank_id from bank where (bank_nazwa= 'Bank_1' ));
+select @where_id;
+
+call bank_jednostki(get_bank_id("Bank_1")); # !!!
 #------------------------------------------------------------
 # triggery itp - dodanie statusu (gotowa do transfuzji, zutylizowana, przetransfuzowana)
 # triggery itp. - dodanie stanu zapotrzebowania enum('0','A','B','AB') / # zapasy jako funkcja

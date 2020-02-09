@@ -72,25 +72,45 @@ public class LoginFXController {
         jednostkiKrwiDAO= new JednostkiKrwiDAO(login, dbUtil);
         zapasyDAO= new ZapasyDAO(login, dbUtil);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/centrumFX.fxml"));
+        String fxml = null;
 
+        if (login=="root") {
+            fxml = "centrumFX.fxml";
 
-        Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxml));
+            Parent root = loader.load();
 
-        // centrum modal
-        CentrumFXController centrumFXController = loader.getController();
-        Stage stageCentrum = new Stage();
-        stageCentrum.setScene(new Scene(root));
-        stageCentrum.setTitle("centrum interface");
-        stageCentrum.initModality(Modality.WINDOW_MODAL);
-        centrumFXController.dbUtil = this.dbUtil;
-        centrumFXController.login = this.login;
-        centrumFXController.bankiDAO = this.bankiDAO;
-        centrumFXController.jednostkiKrwiDAO = this.jednostkiKrwiDAO;
-        centrumFXController.zapasyDAO = this.zapasyDAO;
-        stageCentrum.show();
+            // centrum modal
+            CentrumFXController centrumFXController = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("centrum interface");
+            stage.initModality(Modality.WINDOW_MODAL);
+            centrumFXController.dbUtil = this.dbUtil;
+            centrumFXController.login = this.login;
+            centrumFXController.bankiDAO = this.bankiDAO;
+            centrumFXController.jednostkiKrwiDAO = this.jednostkiKrwiDAO;
+            centrumFXController.zapasyDAO = this.zapasyDAO;
+            stage.show();
 
+        } else {
+            fxml = "bankFX.fxml";
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxml));
+            Parent root = loader.load();
+
+            // bank modal
+            BankFXController bankFXController = loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("bank interface");
+            stage.initModality(Modality.WINDOW_MODAL);
+            bankFXController.dbUtil = this.dbUtil;
+            bankFXController.login = this.login;
+            bankFXController.jednostkiKrwiDAO = this.jednostkiKrwiDAO;
+            bankFXController.zapasyDAO = this.zapasyDAO;
+            stage.show();
+        }
 
     }
 
