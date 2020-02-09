@@ -1,5 +1,6 @@
 package edu.ib;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -192,7 +193,7 @@ public class CentrumFXController {
             try {
                 dbUtil.dbExecuteUpdate(insertStmt);
             } catch (SQLException e) {
-                consoleTextArea.appendText("Error occurred while INSERT Operation.");
+                consoleTextArea.appendText("Error occurred while INSERT Operation."  + "\n");
                 throw e;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -243,11 +244,16 @@ public class CentrumFXController {
     }
 
     @FXML
-    void addDonorButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void addDonorButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
 
         if (!dodaj_dawce_dawca_id.getText().isEmpty() && !dodaj_dawce_dawca_waga.getText().isEmpty() && !dodaj_dawce_dawca_data_urodzenia.getText().isEmpty()
                 && !centrum_tabela_jednostki_krwi_dawca_imie_nazwisko.getText().isEmpty() && !centrum_tabela_jednostki_krwi_jednostka_krwi_id.getText().isEmpty()
                 && !dodaj_dawce_imie_nazwisko.getText().isEmpty()) {
+
+            if (Integer.parseInt(dodaj_dawce_dawca_waga.getText()) < 50) {
+                consoleTextArea.appendText("Donor cannot weight less than 50kg!" + "\n");
+                throw new IllegalArgumentException("Donor cannot weight less than 50kg!");
+            }
 
             StringBuilder sb = new StringBuilder("INSERT INTO dawca (dawca_id, dawca_waga, dawca_data_urodzenia, dawca_imie_nazwisko)\n" +
                     "VALUES (");
@@ -257,7 +263,6 @@ public class CentrumFXController {
             sb.append("'" + dodaj_dawce_imie_nazwisko.getText() + "'");
             sb.append(");");
             String insertStmt = sb.toString();
-
 
             try {
                 dbUtil.dbExecuteUpdate(insertStmt);
