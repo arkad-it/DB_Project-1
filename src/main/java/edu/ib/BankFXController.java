@@ -25,7 +25,7 @@ public class BankFXController {
 
     public String grupa_input;
     public String Rh_input;
-    public ZapasyWybraneDAO zapasyWybraneDAO = new ZapasyWybraneDAO(grupa_input, Rh_input);
+    public ZapasyWybraneDAO zapasyWybraneDAO;
 
     public ZapasyWybraneDAO getZapasyWybraneDAO() {
         return zapasyWybraneDAO;
@@ -150,24 +150,29 @@ public class BankFXController {
     @FXML
     void showReservesButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        this.grupa_input = wyswietl_zapasy_jednostka_krwi_grupa.getText();
-        this.Rh_input = wyswietl_zapasy_jednostka_krwi_Rh.getText();
+        grupa_input = wyswietl_zapasy_jednostka_krwi_grupa.getText();
+        Rh_input = wyswietl_zapasy_jednostka_krwi_Rh.getText();
 
         dbUtil.dbExecuteUpdate("call sprawdzenie_zapasow();");
         dbUtil.dbExecuteUpdate("call sprawdzenie_daty();");
 
         //
+        zapasyWybraneDAO = new ZapasyWybraneDAO(grupa_input, Rh_input, dbUtil);
         //
-
-        ObservableList<Zapasy> zapasyWybraneObservableList = null;
-        try {
-            zapasyWybraneObservableList = zapasyWybraneDAO.showAllZapasyWybrane();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if (!wyswietl_zapasy_jednostka_krwi_grupa.getText().isEmpty() && !wyswietl_zapasy_jednostka_krwi_grupa.getText().isEmpty()) {
+            ObservableList<Zapasy> zapasyWybraneObservableList = null;
+            try {
+                zapasyWybraneObservableList = zapasyWybraneDAO.showAllZapasyWybrane();
+            } catch (SQLException e) {
+                consoleTextArea.appendText("Error occurred while transfuzja(); Operation." + "\n");
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            populateWybraneZapasy(zapasyWybraneObservableList);
+        } else {
+            consoleTextArea.appendText("Reserves check failed! - all textfields must be filled with data.");
         }
-        populateWybraneZapasy(zapasyWybraneObservableList);
 
     }
 

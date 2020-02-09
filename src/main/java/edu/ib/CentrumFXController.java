@@ -202,7 +202,6 @@ public class CentrumFXController {
         }
         else {consoleTextArea.appendText("Bank addition failed! - all textfields must be filled with data." + "\n");}
 
-
         loadData();
 
     }

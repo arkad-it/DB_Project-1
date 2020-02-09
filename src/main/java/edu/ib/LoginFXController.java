@@ -78,7 +78,7 @@ public class LoginFXController {
 
         String fxml = null;
 
-        if (login=="root") {
+        if (login.toString().equals("root")) {
             fxml = "centrumFX.fxml";
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxml));
@@ -95,7 +95,9 @@ public class LoginFXController {
             centrumFXController.bankiDAO = this.bankiDAO;
             centrumFXController.jednostkiKrwiDAO = this.jednostkiKrwiDAO;
             centrumFXController.zapasyDAO = this.zapasyDAO;
-            stage.show();
+            stage.showAndWait();
+
+
 
         } else {
             fxml = "bankFX.fxml";
@@ -114,7 +116,7 @@ public class LoginFXController {
             bankFXController.jednostkiKrwiDAO = this.jednostkiKrwiDAO;
             bankFXController.zapasyDAO = this.zapasyDAO;
             bankFXController.zapasyWybraneDAO = this.zapasyWybraneDAO;
-            stage.show();
+            stage.showAndWait();
         }
 
     }
