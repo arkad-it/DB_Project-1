@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class LoginFXController {
 
@@ -65,6 +67,7 @@ public class LoginFXController {
     @FXML
     void connectButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
 
+
         dbUtil = new DBUtil(userEditText.getText(), passwordEditText.getText(), logTextView);
         dbUtil.dbConnect();
         logTextView.appendText("Access granted for user: \"" + userEditText.getText() + "\"." + "\n");
@@ -77,6 +80,9 @@ public class LoginFXController {
         zapasyWybraneDAO = new ZapasyWybraneDAO(login, dbUtil);
 
         String fxml = null;
+
+        Stage stageClose = (Stage) connectButton.getScene().getWindow();
+        stageClose.close();
 
         if (login.toString().equals("root")) {
             fxml = "centrumFX.fxml";

@@ -2,6 +2,7 @@ package edu.ib;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,10 @@ public class CentrumFXController {
     public BankiDAO bankiDAO;
     public JednostkiKrwiDAO jednostkiKrwiDAO;
     public ZapasyDAO zapasyDAO;
+
+    private int roznicaDniEmpty;
+
+    private int initUnit=0;
 
     @FXML
     private ResourceBundle resources;
@@ -177,6 +182,7 @@ public class CentrumFXController {
                 && !bank_miasto.getText().isEmpty() && !bank_kod_pocztowy.getText().isEmpty()
                 && !bank_ulica.getText().isEmpty() && !bank_email.getText().isEmpty()
                 && !bank_tel.getText().isEmpty()) {
+
             StringBuilder sb = new StringBuilder("INSERT INTO bank (bank_id, bank_nazwa, bank_miasto, bank_kod_pocztowy, bank_ulica, bank_email, bank_tel)\n" +
                     "VALUES (");
             sb.append(bank_id.getText() + ",");
@@ -212,30 +218,60 @@ public class CentrumFXController {
         if (!dodaj_jednostke_jednostka_krwi_id.getText().isEmpty() && !dodaj_jednostke_dawca_id.getText().isEmpty() && !dodaj_jednostke_jednostka_krwi_Rh.getText().isEmpty()
                 && !dodaj_jednostke_jednostka_krwi_grupa.getText().isEmpty() && !dodaj_jednostke_jednostka_krwi_data_oddania.getText().isEmpty()
                 && !dodaj_jednostke_bank_id.getText().isEmpty()) {
-            StringBuilder sb = new StringBuilder("INSERT INTO jednostka_krwi (jednostka_krwi_id, dawca_id, jednostka_krwi_Rh, jednostka_krwi_grupa, jednostka_krwi_data_oddania, bank_id)\n" +
-                    "VALUES (");
-            sb.append(dodaj_jednostke_jednostka_krwi_id.getText() + ",");
-            sb.append(dodaj_jednostke_dawca_id.getText() + ",");
-            sb.append("'" + dodaj_jednostke_jednostka_krwi_Rh.getText() + "'" + ",");
-            sb.append("'" + dodaj_jednostke_jednostka_krwi_grupa.getText() + "'" + ",");
-            sb.append("'" + dodaj_jednostke_jednostka_krwi_data_oddania.getText() + "'" + ",");
-            sb.append(dodaj_jednostke_bank_id.getText());
-            sb.append(");");
-            String insertStmt = sb.toString();
 
+            ResultSet ostatniDzienPustyRs = dbUtil.dbExecuteQuery("select ostatni_dzien("+dodaj_jednostke_dawca_id.getText()+");");
+            ostatniDzienPustyRs.next();
+            String ostatniDzienPustyRsString = ostatniDzienPustyRs.getString(1);
+            System.out.println("Ostatni dzien " + ostatniDzienPustyRsString);
 
-            try {
-                dbUtil.dbExecuteUpdate(insertStmt);
-            } catch (SQLException e) {
-                consoleTextArea.appendText("Error occurred while INSERT Operation.");
-                throw e;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            String dzienOddaniaString = null;
+            if(roznicaDniEmpty == 0){
+            } else {
+
+                ResultSet dzienOddania = dbUtil.dbExecuteQuery("select dzien_oddania('"+dodaj_jednostke_jednostka_krwi_data_oddania.getText()+"');");
+                dzienOddania.next();
+                dzienOddaniaString = dzienOddania.getString(1);
             }
-            consoleTextArea.appendText("Unit added successfully!" + "\n");
-        }
-        else {consoleTextArea.appendText("Unit addition failed! - all textfields must be filled with data." + "\n");}
+            System.out.println("Dzien oddania: " + dzienOddaniaString);
+            ResultSet roznicaRs = dbUtil.dbExecuteQuery("SELECT DATEDIFF('"+dzienOddaniaString+"', '"+ostatniDzienPustyRsString+"');");
+            roznicaRs.next();
+            int roznicaDni = roznicaRs.getInt(1);
 
+
+            System.out.println(roznicaDni);
+            if (roznicaDni > 56 || roznicaDniEmpty==0){
+
+
+                roznicaDniEmpty=roznicaDniEmpty+1;
+                StringBuilder sb = new StringBuilder("INSERT INTO jednostka_krwi (jednostka_krwi_id, dawca_id, jednostka_krwi_Rh, jednostka_krwi_grupa, jednostka_krwi_data_oddania, bank_id)\n" +
+                        "VALUES (");
+                sb.append(dodaj_jednostke_jednostka_krwi_id.getText() + ",");
+                sb.append(dodaj_jednostke_dawca_id.getText() + ",");
+                sb.append("'" + dodaj_jednostke_jednostka_krwi_Rh.getText() + "'" + ",");
+                sb.append("'" + dodaj_jednostke_jednostka_krwi_grupa.getText() + "'" + ",");
+                sb.append("'" + dodaj_jednostke_jednostka_krwi_data_oddania.getText() + "'" + ",");
+                sb.append(dodaj_jednostke_bank_id.getText());
+                sb.append(");");
+                String insertStmt = sb.toString();
+
+                try {
+                    dbUtil.dbExecuteUpdate(insertStmt);
+                } catch (SQLException e) {
+                    consoleTextArea.appendText("Error occurred while INSERT Operation.");
+                    throw e;
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                consoleTextArea.appendText("Unit added successfully!");
+            } else {
+                consoleTextArea.appendText("" + "\n"
+                +  "Unit addition can succeed ONLY IF: donor's last visit did not took place within the last 56 days! " +
+                "Otherwise, added unit is dropped immediately!" + "\n");
+            }
+        }
+
+        else {consoleTextArea.appendText("Unit addition failed! - all textfields must be filled with data.");}
 
         loadData();
 
@@ -284,7 +320,6 @@ public class CentrumFXController {
     void disconnectButtonOnClick(ActionEvent event) throws SQLException {
 
         dbUtil.dbDisconnect();
-        centrum_tabela_banki.getItems().clear();
 
         Stage stage = (Stage) disconnectButton.getScene().getWindow();
         stage.close();
@@ -293,6 +328,7 @@ public class CentrumFXController {
 
     @FXML
     void pokazDaneButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
+
 
         loadData();
 

@@ -36,52 +36,52 @@
 
     <TableView fx:id="bank_tabela_jednostki" prefHeight="160.0" prefWidth="1278.0" GridPane.rowIndex="3">
         <columns>
-            <TableColumn fx:id="bank_dawca_id" text="dawca_id">
+            <TableColumn fx:id="bank_dawca_id" text="ID dawcy">
                 <cellValueFactory>
                     <PropertyValueFactory property="Dawca_id"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_dawca_waga" prefWidth="85.0" text="dawca_waga">
+            <TableColumn fx:id="bank_dawca_waga" prefWidth="85.0" text="Waga dawcy">
                 <cellValueFactory>
                     <PropertyValueFactory property="Dawca_waga"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_dawca_data_urodzenia" prefWidth="138.0" text="dawca_data_urodzenia">
+            <TableColumn fx:id="bank_dawca_data_urodzenia" prefWidth="138.0" text="Data ur. dawcy">
                 <cellValueFactory>
                     <PropertyValueFactory property="Dawca_data_urodzenia"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_dawca_imie_nazwisko" prefWidth="131.0" text="dawca_imie_nazwisko">
+            <TableColumn fx:id="bank_dawca_imie_nazwisko" prefWidth="131.0" text="Imię i nazwisko dawcy">
                 <cellValueFactory>
                     <PropertyValueFactory property="Dawca_imie_nazwisko"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_jednostka_krwi_id" prefWidth="116.0" text="jednostka_krwi_id">
+            <TableColumn fx:id="bank_jednostka_krwi_id" prefWidth="116.0" text="ID jednostki krwi">
                 <cellValueFactory>
                     <PropertyValueFactory property="Jednostka_krwi_id"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_jednostka_krwi_grupa" prefWidth="146.0" text="jednostka_krwi_grupa">
+            <TableColumn fx:id="bank_jednostka_krwi_grupa" prefWidth="146.0" text="Grupa jednostki krwi">
                 <cellValueFactory>
                     <PropertyValueFactory property="Jednostka_krwi_grupa"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_jednostka_krwi_Rh" prefWidth="130.0" text="jednostka_krwi_Rh">
+            <TableColumn fx:id="bank_jednostka_krwi_Rh" prefWidth="130.0" text="Rh jednostki krwi">
                 <cellValueFactory>
                     <PropertyValueFactory property="Jednostka_krwi_Rh"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_jednostka_krwi_data_oddania" prefWidth="173.0" text="jednostka_krwi_data_oddania">
+            <TableColumn fx:id="bank_jednostka_krwi_data_oddania" prefWidth="173.0" text="Data oddania jednostki krwi">
                 <cellValueFactory>
                     <PropertyValueFactory property="Jednostka_krwi_data_oddania"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_jednostka_krwi_status_var" prefWidth="203.0" text="jednostka_krwi_status_var">
+            <TableColumn fx:id="bank_jednostka_krwi_status_var" prefWidth="203.0" text="Status jednostki krwi">
                 <cellValueFactory>
                     <PropertyValueFactory property="Jednostka_krwi_status_var"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="bank_tabela_jednostka_krwi_bank_id" prefWidth="75.0" text="bank_id">
+            <TableColumn fx:id="bank_tabela_jednostka_krwi_bank_id" prefWidth="75.0" text="ID banku">
                 <cellValueFactory>
                     <PropertyValueFactory property="Bank_id"/>
                 </cellValueFactory>
@@ -92,27 +92,27 @@
         <children>
             <TableView fx:id="bank_tabela_zapasy" prefHeight="155.0" prefWidth="640.0">
                 <columns>
-                    <TableColumn fx:id="bank_tabela_zapasy_grupa" prefWidth="128.0" text="grupa">
+                    <TableColumn fx:id="bank_tabela_zapasy_grupa" prefWidth="128.0" text="Grupa jednostki krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Grupa"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_Rh" minWidth="0.0" prefWidth="128.0" text="Rh">
+                    <TableColumn fx:id="bank_tabela_zapasy_Rh" minWidth="0.0" prefWidth="128.0" text="Rh jednostki krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Rh"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_ilosc" prefWidth="128.0" text="ilosc">
+                    <TableColumn fx:id="bank_tabela_zapasy_ilosc" prefWidth="128.0" text="Ilość jednostek krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Ilosc"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_potrzeba" prefWidth="128.0" text="potrzeba">
+                    <TableColumn fx:id="bank_tabela_zapasy_potrzeba" prefWidth="128.0" text="Potrzeba jednostek krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Potrzeba"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_bank_id" minWidth="0.0" prefWidth="128.0" text="bank_id">
+                    <TableColumn fx:id="bank_tabela_zapasy_bank_id" minWidth="0.0" prefWidth="128.0" text="ID banku">
                         <cellValueFactory>
                             <PropertyValueFactory property="Bank_id"/>
                         </cellValueFactory>
@@ -121,22 +121,22 @@
             </TableView>
             <TableView fx:id="bank_tabela_zapasy_wybrane" prefHeight="72.0" prefWidth="640.0">
                 <columns>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_grupa" prefWidth="128.0" text="grupa">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_grupa" prefWidth="128.0" text="Grupa jednostki krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Grupa"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_Rh" prefWidth="128.0" text="Rh">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_Rh" prefWidth="128.0" text="Rh jednostki krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Rh"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_ilosc" prefWidth="128.0" text="ilosc">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_ilosc" prefWidth="128.0" text="Ilość jednostek krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Ilosc"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_potrzeba" prefWidth="128.0" text="potrzeba">
+                    <TableColumn fx:id="bank_tabela_zapasy_wybrane_potrzeba" prefWidth="128.0" text="Potrzeba jednostek krwi">
                         <cellValueFactory>
                             <PropertyValueFactory property="Potrzeba"/>
                         </cellValueFactory>

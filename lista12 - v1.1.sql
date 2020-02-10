@@ -254,7 +254,8 @@ call sprawdzenie_zapasow;					# sprawdzenie zapasów wszystkich banków (dla gru
 
 INSERT INTO jednostka_krwi (jednostka_krwi_id, dawca_id, jednostka_krwi_Rh, jednostka_krwi_grupa, jednostka_krwi_data_oddania, bank_id)
 VALUES 
-(4, 1, '+', '0', '2020-02-03', '10')
+(9, 1, '+', '0', '2020-02-05', '10'),
+(10, 1, '+', '0', '2020-02-06', '10')
 ;
 
 call sprawdzenie_zapasów_wybrane('0', '+'); # przed sprawdzenie_zapasów_wybrane wykonać sprawdzenie_daty(); i sprawdzenie_zapasów();		!!!
@@ -316,6 +317,85 @@ SET @where_id = (select bank_id from bank where (bank_nazwa= 'Bank_1' ));
 select @where_id;
 
 call bank_jednostki(get_bank_id("Bank_1")); # !!!
+
+#------------------------------------------------------------# 56 DNI OD OSTATNIEGO ODDANIA?:
+
+set @ostatni_dzien := (select jednostka_krwi_data_oddania as ostatni_dzien  from jednostka_krwi where (dawca_id=1) group by ostatni_dzien order by ostatni_dzien desc limit 1);
+set @dzien_oddania := (select jednostka_krwi_data_oddania as ostatni_dzien  from jednostka_krwi where (dawca_id=3) group by ostatni_dzien order by ostatni_dzien desc limit 1);
+set @roznica_dni := (SELECT DATEDIFF(@dzien_oddania, @ostatni_dzien));
+select @roznica_dni;
+
+drop PROCEDURE if exists ostatnie_oddanie;
+DELIMITER $$
+CREATE PROCEDURE ostatnie_oddanie
+(id_usuniete int)
+
+BEGIN
+
+if ( @roznica_dni <56) then 
+
+delete from jednostka_krwi_status where jednostka_krwi_id=id_usuniete;
+delete from jednostka_krwi where jednostka_krwi_id=id_usuniete;
+
+drop view if exists dawca_jednostka_krwi_status_widok;
+create view dawca_jednostka_krwi_status_widok as 
+select d.dawca_id, d.dawca_waga, d.dawca_data_urodzenia, d.dawca_imie_nazwisko, j.jednostka_krwi_id, j.jednostka_krwi_grupa, j.jednostka_krwi_Rh, j.jednostka_krwi_data_oddania, s.jednostka_krwi_status_var, j.bank_id from jednostka_krwi j join dawca d on j.dawca_id=d.dawca_id join jednostka_krwi_status s on j.jednostka_krwi_id=s.jednostka_krwi_id;
+
+end if;
+
+END $$
+DELIMITER ;
+
+call ostatnie_oddanie(3);
+
+delete from jednostka_krwi_status where (dawca_id=1);
+delete from jednostka_krwi where (dawca_id=1);
+
+delete from jednostka_krwi_status;
+delete from jednostka_krwi;
+
+set @ostatni_dzien := (select jednostka_krwi_data_oddania from jednostka_krwi where (dawca_id=1) order by jednostka_krwi_data_oddania desc limit 1);
+select @ostatni_dzien;
+
+#-------------------------------- OSTATNI DZIEN
+
+drop function if exists ostatni_dzien;
+DELIMITER $$
+CREATE function ostatni_dzien
+(id_ostatnie_oddanie int) RETURNS date
+DETERMINISTIC
+
+BEGIN
+
+declare dataReturn date;
+select jednostka_krwi_data_oddania from jednostka_krwi where (dawca_id=id_ostatnie_oddanie) order by jednostka_krwi_data_oddania desc limit 1 into dataReturn;
+
+return dataReturn;
+
+END $$
+DELIMITER ;
+
+#-------------------------------- OSTATNI DZIEN
+
+drop function if exists dzien_oddania;
+DELIMITER $$
+CREATE function dzien_oddania
+(data_oddania date) RETURNS date
+DETERMINISTIC
+
+BEGIN
+
+declare dataReturn date;
+select data_oddania into dataReturn;
+
+return dataReturn;
+
+END $$
+DELIMITER ;
+
+# dbUtil nie rejestruje zmian w przypisaniu zmiennych jako SET, oraz nie wykonuje wielu zapytań w jednym parametrze; - traktuje zapytanie jako jedną, niezależną sesję!!!
+
+
 #------------------------------------------------------------
 # triggery itp - dodanie statusu (gotowa do transfuzji, zutylizowana, przetransfuzowana)
 # triggery itp. - dodanie stanu zapotrzebowania enum('0','A','B','AB') / # zapasy jako funkcja

@@ -83,11 +83,8 @@ public class DBUtil {
         try {
 
             dbConnect();
-
             stmt = conn.prepareStatement(queryStmt);
-
             resultSet = stmt.executeQuery(queryStmt);
-
             crs = new CachedRowSetWrapper();
 
             crs.populate(resultSet);
