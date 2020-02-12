@@ -7,11 +7,21 @@ import javafx.scene.control.TextArea;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * JednostkiKrwiDAO as a class responsible for executing the SQL queries relative to blood units inside java through DBUtil class connection;
+ */
+
 public class JednostkiKrwiDAO {
 
     private String login;
     private DBUtil dbUtil;
     private TextArea consoleTextArea;
+
+    /**
+     * @param login - database passed username;
+     * @param dbUtil - a DB connection required to be passed to the DAO class in order to keep the availability of the DB data;
+     * @param consoleTextArea - nfo/error terminal;
+     */
 
     public JednostkiKrwiDAO(String login, DBUtil dbUtil, TextArea consoleTextArea) {
         this.login = login;
@@ -24,6 +34,12 @@ public class JednostkiKrwiDAO {
         this.dbUtil = dbUtil;
     }
 
+    /**
+     * @return - SQL table/view of all available blood units;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     public ObservableList<JednostkiKrwi> showAllJednostki() throws SQLException, ClassNotFoundException {
 
         String selectStmt = "SELECT * FROM dawca_jednostka_krwi_status_widok;";
@@ -33,6 +49,12 @@ public class JednostkiKrwiDAO {
 
     }
 
+    /**
+     * @return - SQL table/view of all available user defined bank type blood units;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     public ObservableList<JednostkiKrwi> showWybraneJednostki() throws SQLException, ClassNotFoundException {
 
         String selectStmt = "call bank_jednostki(get_bank_id('"+login+"'));";
@@ -41,6 +63,12 @@ public class JednostkiKrwiDAO {
         return jednostkiKrwiWybraneObservableList;
 
     }
+
+    /**
+     * @param rs
+     * @return - set showAllBanki()'s return to java variables;
+     * @throws SQLException
+     */
 
     private ObservableList<JednostkiKrwi> getJednostkiList(ResultSet rs) throws SQLException {
 

@@ -2,9 +2,13 @@ package edu.ib;
 
 import com.github.vldrus.sql.rowset.CachedRowSetWrapper;
 import javafx.scene.control.TextArea;
+
 import java.sql.*;
 import javax.sql.rowset.CachedRowSet;
 
+/**
+ * DBUtil as a class responsible for the whole DB connection to java environment;
+ */
 
 public class DBUtil {
 
@@ -12,6 +16,12 @@ public class DBUtil {
     private String userPassword;
     private TextArea consoleTextArea;
     private Connection conn = null;
+
+    /**
+     * @param userName        - user login
+     * @param userPassword    - user account password
+     * @param consoleTextArea - nfo/error terminal
+     */
 
     public DBUtil(String userName, String userPassword, TextArea consoleTextArea) {
         this.userName = userName;
@@ -59,6 +69,10 @@ public class DBUtil {
         }
     }
 
+    /**
+     * @return createURL() as a method responsible for the user database url path concat;
+     */
+
     private String createURL() {
 
         StringBuilder urlSB = new StringBuilder("jdbc:mysql://");
@@ -73,6 +87,13 @@ public class DBUtil {
 
         return urlSB.toString();
     }
+
+    /**
+     * @param queryStmt - user defined create/retrive type SQL query;
+     * @return - the query result;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     public ResultSet dbExecuteQuery(String queryStmt) throws SQLException, ClassNotFoundException {
 
@@ -104,7 +125,13 @@ public class DBUtil {
         return crs;
     }
 
-    public  void dbExecuteUpdate(String sqlStmt) throws SQLException, ClassNotFoundException {
+    /**
+     * @param sqlStmt - user defined update type SQL query;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
+    public void dbExecuteUpdate(String sqlStmt) throws SQLException, ClassNotFoundException {
 
         Statement stmt = null;
         try {
@@ -127,6 +154,7 @@ public class DBUtil {
         System.out.println(userName);
         return userName;
     }
+
     public String getPassword() throws SQLException, ClassNotFoundException {
         System.out.println(userPassword);
         return userPassword;

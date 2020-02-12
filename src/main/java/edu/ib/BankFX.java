@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * BankFX as a class responsible for Bank window stage set (as a subwindow to the LoginFX);
+ */
+
 public class BankFX extends Application {
 
     public static void main(String[] args) {

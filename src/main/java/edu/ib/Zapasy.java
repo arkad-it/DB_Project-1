@@ -5,6 +5,11 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Zapasy {
 
+
+    /**
+     * Zapasy as a class responsible for MySQL data mapping (contains all of the blood's reserves table params);
+     */
+
     private SimpleStringProperty grupa;
     private SimpleStringProperty Rh;
     private SimpleIntegerProperty ilosc;

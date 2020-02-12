@@ -44,7 +44,7 @@ empty_var varchar(50)
 #------------------------------------------------------------
 drop table if exists jednostka_krwi_status;
 create table jednostka_krwi_status(
-jednostka_krwi_id int,
+jednostka_krwi_id int primary key not null,
 foreign key (jednostka_krwi_id) references jednostka_krwi(jednostka_krwi_id),
 dawca_id int,
 jednostka_krwi_data_oddania date,
@@ -157,7 +157,7 @@ select grupa, Rh, ilosc, potrzeba, id_banku from sprawdzenie_zapasow_tabela grou
 END $$
 DELIMITER ;
 
-#------------------------------------------------------------# ZESTAWIEINE DLA ZADANEJ GRUPY - Rh (dane dawcy/zapasy???)
+#------------------------------------------------------------# ZESTAWIEINE DLA ZADANEJ GRUPY - Rh 
 
 drop PROCEDURE if exists sprawdzenie_zapasow_wybrane;
 DELIMITER $$
@@ -236,9 +236,7 @@ VALUES
 ;
 INSERT INTO jednostka_krwi (jednostka_krwi_id, dawca_id, jednostka_krwi_Rh, jednostka_krwi_grupa, jednostka_krwi_data_oddania, bank_id)
 VALUES 
-(1, 1, '+', '0', '2020-02-03', '10'),
-(2, 2, '-', 'AB', '2020-02-03', '10'),
-(3, 3, '-', 'B', '2020-01-03', '10')
+(11, 1, '-', 'AB', '2020-02-03', '20')
 ;
 INSERT INTO jednostka_krwi (jednostka_krwi_id, dawca_id, jednostka_krwi_Rh, jednostka_krwi_grupa, jednostka_krwi_data_oddania, bank_id)
 VALUES 
@@ -370,8 +368,11 @@ BEGIN
 declare dataReturn date;
 select jednostka_krwi_data_oddania from jednostka_krwi where (dawca_id=id_ostatnie_oddanie) order by jednostka_krwi_data_oddania desc limit 1 into dataReturn;
 
-return dataReturn;
+if (dataReturn=null) then
+select ("0000-00-00") into dataReturn;
+end if;
 
+return dataReturn;
 END $$
 DELIMITER ;
 

@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * CentrumFX as a class responsible for Centrum window stage set (as a subwindow to the LoginFX);
+ */
+
 public class CentrumFX extends Application {
 
     public static void main(String[] args) {

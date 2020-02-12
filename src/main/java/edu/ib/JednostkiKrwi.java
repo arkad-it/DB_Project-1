@@ -6,6 +6,10 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class JednostkiKrwi {
 
+    /**
+     * JednostkiKrwi as a class responsible for MySQL data mapping (contains all of the blood unit's table params);
+     */
+
     private SimpleIntegerProperty dawca_id;
     private SimpleFloatProperty dawca_waga;
     private String dawca_data_urodzenia;

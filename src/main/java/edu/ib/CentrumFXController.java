@@ -12,18 +12,29 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+/**
+ * CentrumFXController as a *.fxml generated through SceneBuilder format class responsible for Central (root) window functionality;
+ */
+
 public class CentrumFXController {
 
     public String login;
-    public String password;
     public DBUtil dbUtil;
     public BankiDAO bankiDAO;
     public JednostkiKrwiDAO jednostkiKrwiDAO;
     public ZapasyDAO zapasyDAO;
 
+    /**
+     * @param login - input username
+     * @param dbUtil - DB connection pass;
+     * @param (...)DAO - objects enabling the app window's tables columns/rows/values setup;
+     */
+
     private int roznicaDniEmpty;
 
-    private int initUnit=0;
+    /**
+     * @param roznicaDniEmpty - a helpful variable being a pass to the addBloodUnitButtonOnClick() for the 1st. blood unit donation of a patient;
+     */
 
     @FXML
     private ResourceBundle resources;
@@ -175,6 +186,15 @@ public class CentrumFXController {
     @FXML
     private Button pokazDaneButton;
 
+    /**
+     * ddBankButtonOnClick(ActionEvent event) as a class responsible for SQL INSERT operation;
+     * contains a condition responsible for delivering all of the required user input data;
+     * Carries exceptions;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     @FXML
     void addBankButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
@@ -212,6 +232,16 @@ public class CentrumFXController {
 
     }
 
+    /**
+     * addBloodUnitButtonOnClick(ActionEvent event) as a class responsible for SQL INSERT operation;
+     * contains a condition responsible for delivering all of the required user input data;
+     * takes care of the case when the return table variables are null;
+     * Carries exceptions;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     @FXML
     void addBloodUnitButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
@@ -219,27 +249,27 @@ public class CentrumFXController {
                 && !dodaj_jednostke_jednostka_krwi_grupa.getText().isEmpty() && !dodaj_jednostke_jednostka_krwi_data_oddania.getText().isEmpty()
                 && !dodaj_jednostke_bank_id.getText().isEmpty()) {
 
-            ResultSet ostatniDzienPustyRs = dbUtil.dbExecuteQuery("select ostatni_dzien("+dodaj_jednostke_dawca_id.getText()+");");
-            ostatniDzienPustyRs.next();
-            String ostatniDzienPustyRsString = ostatniDzienPustyRs.getString(1);
-            System.out.println("Ostatni dzien " + ostatniDzienPustyRsString);
+            ResultSet ostatniDzien = dbUtil.dbExecuteQuery("select ostatni_dzien("+dodaj_jednostke_dawca_id.getText()+");");
+            ostatniDzien.next();
+            String ostatniDzienString = ostatniDzien.getString(1);
+            System.out.println("Ostatni dzien " + ostatniDzienString);
 
             String dzienOddaniaString = null;
-            if(roznicaDniEmpty == 0){
-            } else {
-
+            if(ostatniDzienString != null && !ostatniDzienString.isEmpty()){
                 ResultSet dzienOddania = dbUtil.dbExecuteQuery("select dzien_oddania('"+dodaj_jednostke_jednostka_krwi_data_oddania.getText()+"');");
                 dzienOddania.next();
                 dzienOddaniaString = dzienOddania.getString(1);
+            } else {
+                roznicaDniEmpty=-1;
             }
             System.out.println("Dzien oddania: " + dzienOddaniaString);
-            ResultSet roznicaRs = dbUtil.dbExecuteQuery("SELECT DATEDIFF('"+dzienOddaniaString+"', '"+ostatniDzienPustyRsString+"');");
+            ResultSet roznicaRs = dbUtil.dbExecuteQuery("SELECT DATEDIFF('"+dzienOddaniaString+"', '"+ostatniDzienString+"');");
             roznicaRs.next();
             int roznicaDni = roznicaRs.getInt(1);
 
 
             System.out.println(roznicaDni);
-            if (roznicaDni > 56 || roznicaDniEmpty==0){
+            if (roznicaDni > 56 || roznicaDniEmpty==-1){
 
 
                 roznicaDniEmpty=roznicaDniEmpty+1;
@@ -257,13 +287,13 @@ public class CentrumFXController {
                 try {
                     dbUtil.dbExecuteUpdate(insertStmt);
                 } catch (SQLException e) {
-                    consoleTextArea.appendText("Error occurred while INSERT Operation.");
+                    consoleTextArea.appendText("Error occurred while INSERT Operation."+"\n");
                     throw e;
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                consoleTextArea.appendText("Unit added successfully!");
+                consoleTextArea.appendText("Unit added successfully!"+"\n");
             } else {
                 consoleTextArea.appendText("" + "\n"
                 +  "Unit addition can succeed ONLY IF: donor's last visit did not took place within the last 56 days! " +
@@ -271,12 +301,21 @@ public class CentrumFXController {
             }
         }
 
-        else {consoleTextArea.appendText("Unit addition failed! - all textfields must be filled with data.");}
+        else {consoleTextArea.appendText("Unit addition failed! - all textfields must be filled with data."+"\n");}
 
         loadData();
 
 
     }
+
+    /**
+     * addDonorButtonOnClick(ActionEvent event) as a class responsible for SQL INSERT operation;
+     * contains a condition responsible for delivering all of the required user input data;
+     * Carries exceptions;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     @FXML
     void addDonorButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
@@ -302,7 +341,7 @@ public class CentrumFXController {
             try {
                 dbUtil.dbExecuteUpdate(insertStmt);
             } catch (SQLException e) {
-                consoleTextArea.appendText("Error occurred while INSERT Operation.");
+                consoleTextArea.appendText("Error occurred while INSERT Operation."+"\n");
                 throw e;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -316,6 +355,12 @@ public class CentrumFXController {
 
     }
 
+    /**
+     * disconnectButtonOnClick(ActionEvent event) responsible for DB disconnection and the centrum window process termination;
+     * @param event
+     * @throws SQLException
+     */
+
     @FXML
     void disconnectButtonOnClick(ActionEvent event) throws SQLException {
 
@@ -326,6 +371,13 @@ public class CentrumFXController {
 
     }
 
+    /**
+     * pokazDaneButtonOnClick(ActionEvent event) carrying "on click" data load;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     @FXML
     void pokazDaneButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
@@ -333,6 +385,13 @@ public class CentrumFXController {
         loadData();
 
     }
+
+    /**
+     * loadData() as a class responsible for the blood unit's reserves and last donation date update;
+     * fills all the tables with data retrieved from the populate Objects (values) list;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     private void loadData() throws SQLException, ClassNotFoundException {
 

@@ -8,11 +8,21 @@ import javafx.scene.control.TextField;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * BankiDAO as a class responsible for executing the SQL queries relative to blood banks inside java through DBUtil class connection;
+ */
+
 public class BankiDAO {
 
     private String login;
     private DBUtil dbUtil;
     private TextArea consoleTextArea;
+
+    /**
+     * @param login - database passed username;
+     * @param dbUtil - a DB connection required to be passed to the DAO class in order to keep the availability of the DB data;
+     * @param consoleTextArea - nfo/error terminal;
+     */
 
     public BankiDAO(String login, DBUtil dbUtil, TextArea consoleTextArea) {
         this.login = login;
@@ -25,6 +35,12 @@ public class BankiDAO {
         this.dbUtil = dbUtil;
     }
 
+    /**
+     * @return - SQL table/view;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     public ObservableList<Banki> showAllBanki() throws SQLException, ClassNotFoundException {
 
         String selectStmt = "SELECT * FROM bank_widok;";
@@ -33,6 +49,12 @@ public class BankiDAO {
         return bankiObservableList;
 
     }
+
+    /**
+     * @param rs
+     * @return - set showAllBanki()'s return to java variables;
+     * @throws SQLException
+     */
 
     private ObservableList<Banki> getBankiList(ResultSet rs) throws SQLException {
 

@@ -8,6 +8,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * @author: A. Kowal
+ * @ver: v1.0
+ * @date: 2020-02-12
+ */
+
+/**
+ * LoginFX as a class responsible for Login window stage set (the parent window);
+ */
+
 public class LoginFX extends Application {
 
     public static void main(String[] args) {

@@ -18,6 +18,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * BankFXController as a *.fxml generated through SceneBuilder format class responsible for Central (root) window functionality;
+ */
+
 public class BankFXController {
 
     public String login;
@@ -30,6 +34,13 @@ public class BankFXController {
     public String grupa_input;
     public String Rh_input;
     public ZapasyWybraneDAO zapasyWybraneDAO;
+
+    /**
+     * login - input username
+     * dbUtil - DB connection pass;
+     * (...)DAO - objects enabling the app window's tables columns/rows/values setup;
+     * grupa_input/Rh_input as a blood unit's variables passed by user through the input data fields;s
+     */
 
     public ZapasyWybraneDAO getZapasyWybraneDAO() {
         return zapasyWybraneDAO;
@@ -134,12 +145,25 @@ public class BankFXController {
     @FXML
     private Button bank_pokazDaneButton;
 
+    /**
+     * bank_pokazDaneButtonOnClick(ActionEvent event) carrying "on click" data load;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     @FXML
     void bank_pokazDaneButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         loadData();
 
     }
+
+    /**
+     * disconnectButtonOnClick(ActionEvent event) responsible for DB disconnection and the centrum window process termination;
+     * @param event
+     * @throws SQLException
+     */
 
     @FXML
     void disconnectButtonOnClick(ActionEvent event) throws SQLException, IOException {
@@ -150,6 +174,13 @@ public class BankFXController {
         stage.close();
 
     }
+
+    /**
+     * showReservesButtonOnClick(ActionEvent event) responsible for user defined blood unit's reserves table display;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     @FXML
     void showReservesButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -180,6 +211,14 @@ public class BankFXController {
 
     }
 
+    /**
+     * transfusionButtonOnClick(ActionEvent event) as a method responsible for the blood unit's transfusion;
+     * in case of the method call (for the required conditions) changes the blood unit's status and performs data update;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+
     @FXML
     void transfusionButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
 
@@ -204,6 +243,13 @@ public class BankFXController {
         loadData();
 
     }
+
+    /**
+     * loadData() as a class responsible for the blood unit's reserves and last donation date update;
+     * fills all the tables with data retrieved from the populate Objects (values) list;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     private void loadData() throws SQLException, ClassNotFoundException {
 

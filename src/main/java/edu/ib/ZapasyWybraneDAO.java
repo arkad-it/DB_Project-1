@@ -7,6 +7,10 @@ import javafx.scene.control.TextArea;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * ZapasyWybraneDAO as a class responsible for executing the SQL queries relative to user defined blood unit's reserves inside java through DBUtil class connection;
+ */
+
 public class ZapasyWybraneDAO {
 
     private String login;
@@ -33,6 +37,11 @@ public class ZapasyWybraneDAO {
         this.dbUtil = dbUtil;
     }
 
+    /**
+     * @return - SQL table/view of all available user defined blood unit's reserves;
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
 
     public ObservableList<Zapasy> showAllZapasyWybrane() throws SQLException, ClassNotFoundException {
 
@@ -42,6 +51,12 @@ public class ZapasyWybraneDAO {
         return zapasyWybraneObservableList;
 
     }
+
+    /**
+     * @param rs
+     * @return - set showAllZapasyWybrane()'s return to java variables;
+     * @throws SQLException
+     */
 
     private ObservableList<Zapasy> getZapasyWybraneList(ResultSet rs) throws SQLException {
 

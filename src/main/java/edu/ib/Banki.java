@@ -5,6 +5,9 @@ import com.mysql.cj.conf.StringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * Banki as a class responsible for MySQL data mapping (contains all of the blood bank table params);
+ */
 
 public class Banki {
 

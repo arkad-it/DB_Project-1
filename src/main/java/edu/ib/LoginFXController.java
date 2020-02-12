@@ -24,6 +24,10 @@ import javafx.stage.Window;
 
 public class LoginFXController {
 
+    /**
+     * A class responsible for LoginWindow functionality;
+     */
+
     public DBUtil dbUtil;
     public String password;
     public String login;
@@ -31,6 +35,13 @@ public class LoginFXController {
     private JednostkiKrwiDAO jednostkiKrwiDAO;
     private ZapasyDAO zapasyDAO;
     private ZapasyWybraneDAO zapasyWybraneDAO;
+
+    /**
+     * DAO Objects - needed to set and send DB connection status and connection user input data (login/password) to other classes;
+     * login - input username
+     * dbUtil - DB connection pass;
+     * @return
+     */
 
     public BankiDAO getBankiDAO() {
         return bankiDAO;
@@ -63,6 +74,15 @@ public class LoginFXController {
 
     @FXML // fx:id="logTextView"
     private TextArea logTextView; // Value injected by FXMLLoader
+
+    /**
+     * The very first app method performed responsible for login/pass data input, connection and DAO objects initialization;
+     * Analyzes which user gains the connection and sends nfo of which app window should be viewed;
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
 
     @FXML
     void connectButtonOnClick(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
